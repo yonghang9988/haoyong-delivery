@@ -1,0 +1,249 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>豪勇配送调度系统</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="dispatch-app">
+      <aside class="sidebar" aria-label="配送系统导航">
+        <a class="brand" href="#overview">
+          <span class="brand-mark">豪</span>
+          <span>
+            <strong>豪勇配送</strong>
+            <small>Delivery Command</small>
+          </span>
+        </a>
+
+        <nav class="nav-list" aria-label="功能模块">
+          <a href="#overview">实时总览</a>
+          <a href="#drivers">司机监控</a>
+          <a href="#routes">路线规划</a>
+          <a href="#warehouse">客户仓库</a>
+          <a href="#proof">送达回单</a>
+        </nav>
+
+        <section class="system-health" aria-label="系统状态">
+          <p>系统状态</p>
+          <div><span></span>GPS 在线</div>
+          <div><span></span>路线引擎运行中</div>
+          <div><span></span>回单云端同步</div>
+        </section>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar" id="overview">
+          <div>
+            <p>豪勇配送调度系统</p>
+            <h1>实时监控、改线、拍照回单，一屏完成配送任务。</h1>
+          </div>
+          <div class="top-actions">
+            <button class="ghost-button" type="button" id="simulate-alert">下达临时指令</button>
+            <button class="primary-button" type="button" id="optimize-route">自动规划最优路线</button>
+          </div>
+        </header>
+
+        <section class="metric-row" aria-label="配送指标">
+          <article>
+            <span>进行中车辆</span>
+            <strong id="active-drivers">4</strong>
+          </article>
+          <article>
+            <span>今日配送单</span>
+            <strong id="today-orders">28</strong>
+          </article>
+          <article>
+            <span>平均准点率</span>
+            <strong id="on-time-rate">96%</strong>
+          </article>
+          <article>
+            <span>预计节省里程</span>
+            <strong id="saved-distance">12.8km</strong>
+          </article>
+        </section>
+
+        <section class="main-grid">
+          <section class="panel driver-panel" id="drivers" aria-label="司机列表">
+            <div class="panel-heading">
+              <div>
+                <p>司机监控</p>
+                <h2>实时车辆</h2>
+              </div>
+              <span class="live-pill">LIVE</span>
+            </div>
+
+            <div class="driver-list">
+              <button class="driver-item is-active" type="button" data-driver="chen">
+                <span class="avatar">陈</span>
+                <span>
+                  <strong>陈师傅</strong>
+                  <small>沪A-72K8 · 冷链车</small>
+                </span>
+                <em>配送中</em>
+              </button>
+              <button class="driver-item" type="button" data-driver="li">
+                <span class="avatar">李</span>
+                <span>
+                  <strong>李师傅</strong>
+                  <small>沪C-19M2 · 厢货</small>
+                </span>
+                <em>待接单</em>
+              </button>
+              <button class="driver-item" type="button" data-driver="wang">
+                <span class="avatar">王</span>
+                <span>
+                  <strong>王师傅</strong>
+                  <small>沪B-55N6 · 生鲜车</small>
+                </span>
+                <em>回仓中</em>
+              </button>
+              <button class="driver-item" type="button" data-driver="zhou">
+                <span class="avatar">周</span>
+                <span>
+                  <strong>周师傅</strong>
+                  <small>沪D-83P1 · 电动车</small>
+                </span>
+                <em>配送中</em>
+              </button>
+            </div>
+
+            <form class="command-form" id="command-form">
+              <label for="new-instruction">途中新指令</label>
+              <textarea id="new-instruction" rows="3" placeholder="例：先送陆家嘴门店，客户要求 18:20 前到。"></textarea>
+              <div class="form-row">
+                <input id="new-stop" type="text" placeholder="新增地点或客户名称" />
+                <button class="primary-button" type="submit">下发</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="panel map-panel" id="routes" aria-label="实时路线地图">
+            <div class="panel-heading">
+              <div>
+                <p>路线规划</p>
+                <h2 id="route-title">陈师傅 · 今日路线</h2>
+              </div>
+              <button class="ghost-button" type="button" id="reroute-driver">更改师傅路线</button>
+            </div>
+
+            <div class="map-stage" aria-label="模拟实时地图">
+              <div class="route-line"></div>
+              <button class="map-stop stop-one is-done" type="button" data-stop="静安中央厨房">1</button>
+              <button class="map-stop stop-two is-current" type="button" data-stop="徐汇客户仓">2</button>
+              <button class="map-stop stop-three" type="button" data-stop="浦东门店">3</button>
+              <button class="map-stop stop-four" type="button" data-stop="杨浦补货点">4</button>
+              <div class="driver-pin" id="driver-pin" aria-label="司机当前位置">
+                <span></span>
+              </div>
+            </div>
+
+            <div class="route-summary">
+              <div>
+                <span>当前位置</span>
+                <strong id="current-position">徐汇客户仓附近 · 31.190N, 121.436E</strong>
+              </div>
+              <div>
+                <span>下一站 ETA</span>
+                <strong id="eta">18 分钟</strong>
+              </div>
+              <div>
+                <span>路线状态</span>
+                <strong id="route-status">按最优路径执行</strong>
+              </div>
+            </div>
+
+            <ol class="route-list" id="route-list" aria-label="配送路线">
+              <li class="done"><span>01</span><strong>静安中央厨房</strong><em>已装车</em></li>
+              <li class="current"><span>02</span><strong>徐汇客户仓</strong><em>送达中</em></li>
+              <li><span>03</span><strong>浦东门店</strong><em>待配送</em></li>
+              <li><span>04</span><strong>杨浦补货点</strong><em>待配送</em></li>
+            </ol>
+          </section>
+
+          <section class="panel warehouse-panel" id="warehouse" aria-label="客户仓库">
+            <div class="panel-heading">
+              <div>
+                <p>客户仓库</p>
+                <h2>专属库存库</h2>
+              </div>
+              <button class="ghost-button" type="button" id="sync-stock">同步库存</button>
+            </div>
+
+            <div class="customer-tabs" role="tablist" aria-label="客户仓库切换">
+              <button class="is-active" type="button" data-customer="徐汇客户仓">徐汇客户仓</button>
+              <button type="button" data-customer="浦东门店">浦东门店</button>
+              <button type="button" data-customer="杨浦补货点">杨浦补货点</button>
+            </div>
+
+            <div class="stock-list" id="stock-list">
+              <article>
+                <span>冷冻牛肉</span>
+                <strong>32 箱</strong>
+                <em>安全库存</em>
+              </article>
+              <article>
+                <span>净菜组合</span>
+                <strong>86 份</strong>
+                <em>需补 20 份</em>
+              </article>
+              <article>
+                <span>调味料包</span>
+                <strong>140 包</strong>
+                <em>充足</em>
+              </article>
+            </div>
+          </section>
+
+          <section class="panel proof-panel" id="proof" aria-label="送达回单">
+            <div class="panel-heading">
+              <div>
+                <p>送达回单</p>
+                <h2>拍照完成配送</h2>
+              </div>
+              <span class="proof-state" id="proof-state">待上传</span>
+            </div>
+
+            <form class="proof-form" id="proof-form">
+              <label>
+                送货单照片
+                <input id="receipt-photo" type="file" accept="image/*" capture="environment" />
+              </label>
+              <label>
+                货物照片
+                <input id="goods-photo" type="file" accept="image/*" capture="environment" />
+              </label>
+              <textarea id="delivery-note" rows="3" placeholder="填写现场备注，例如：客户签收，冷链温度 4℃。"></textarea>
+              <button class="primary-button" type="submit">完成配送</button>
+            </form>
+
+            <div class="proof-preview" id="proof-preview">
+              <div>送货单未上传</div>
+              <div>货物照片未上传</div>
+            </div>
+          </section>
+        </section>
+
+        <section class="panel task-log" aria-label="任务日志">
+          <div class="panel-heading">
+            <div>
+              <p>执行记录</p>
+              <h2>系统按任务闭环</h2>
+            </div>
+          </div>
+          <ul id="event-log">
+            <li><time>18:02</time> 陈师傅 GPS 已更新，车辆靠近徐汇客户仓。</li>
+            <li><time>17:46</time> 系统完成最优路线计算，预计节省 12.8km。</li>
+            <li><time>17:25</time> 徐汇客户仓库存锁定，准备签收。</li>
+          </ul>
+        </section>
+      </section>
+    </main>
+
+    <div class="toast" role="status" aria-live="polite"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+
