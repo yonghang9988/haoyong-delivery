@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>豪勇配送司机端</title>
+    <link rel="stylesheet" href="driver.css" />
+  </head>
+  <body>
+    <main class="driver-app">
+      <header class="driver-header">
+        <div>
+          <p>豪勇配送司机端</p>
+          <h1>陈师傅，今天还有 3 站待配送。</h1>
+        </div>
+        <span class="online-badge">GPS 在线</span>
+      </header>
+
+      <section class="status-card">
+        <div>
+          <span>当前任务</span>
+          <strong id="current-task">徐汇客户仓</strong>
+        </div>
+        <div>
+          <span>预计到达</span>
+          <strong id="eta">18 分钟</strong>
+        </div>
+        <div>
+          <span>冷链温度</span>
+          <strong>4℃</strong>
+        </div>
+      </section>
+
+      <section class="driver-map" aria-label="司机路线">
+        <div class="mobile-route"></div>
+        <button class="route-point done" type="button">仓</button>
+        <button class="route-point active" type="button">1</button>
+        <button class="route-point second" type="button">2</button>
+        <button class="route-point third" type="button">3</button>
+        <div class="van-pin"><span></span></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <p>配送路线</p>
+          <button type="button" id="refresh-route">同步路线</button>
+        </div>
+        <ol class="stop-list" id="stop-list">
+          <li class="done"><span>已完成</span><strong>静安中央厨房装车</strong><em>17:25</em></li>
+          <li class="active"><span>当前</span><strong>徐汇客户仓</strong><em>18 分钟</em></li>
+          <li><span>下一站</span><strong>浦东门店</strong><em>42 分钟</em></li>
+          <li><span>待配送</span><strong>杨浦补货点</strong><em>68 分钟</em></li>
+        </ol>
+      </section>
+
+      <section class="panel instruction-panel">
+        <div class="panel-title">
+          <p>调度指令</p>
+          <span id="instruction-count">2 条</span>
+        </div>
+        <article>
+          <strong>到达后先联系仓库管理员</strong>
+          <p>客户要求先核对冷链温度，再卸货拍照。</p>
+        </article>
+        <article>
+          <strong>新增临时地点：临时卸货点</strong>
+          <p>系统已自动插入路线，完成徐汇客户仓后执行。</p>
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <p>送达回单</p>
+          <span id="proof-state">待上传</span>
+        </div>
+        <form class="proof-form" id="driver-proof-form">
+          <label>
+            拍摄送货单
+            <input id="receipt-photo" type="file" accept="image/*" capture="environment" />
+          </label>
+          <label>
+            拍摄货物照片
+            <input id="goods-photo" type="file" accept="image/*" capture="environment" />
+          </label>
+          <textarea id="delivery-note" rows="3" placeholder="现场备注：客户已签收，温度正常。"></textarea>
+          <button class="finish-button" type="submit">完成当前配送</button>
+        </form>
+        <div class="photo-preview" id="photo-preview">
+          <div>送货单未上传</div>
+          <div>货物照片未上传</div>
+        </div>
+      </section>
+
+      <nav class="bottom-actions" aria-label="司机快捷操作">
+        <a href="tel:10086">联系调度</a>
+        <button type="button" id="report-delay">上报异常</button>
+        <button type="button" id="next-stop">前往下一站</button>
+      </nav>
+    </main>
+
+    <div class="toast" role="status" aria-live="polite"></div>
+    <script src="driver.js"></script>
+  </body>
+</html>
