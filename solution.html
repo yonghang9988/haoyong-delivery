@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>豪勇系统产品方案</title>
+    <link rel="stylesheet" href="solution.css" />
+  </head>
+  <body>
+    <main class="solution-shell">
+      <aside class="solution-nav">
+        <a class="brand" href="index.html"><span>豪</span><strong>豪勇系统</strong></a>
+        <nav>
+          <a href="#position">产品定位</a>
+          <a href="#architecture">业务架构</a>
+          <a href="#modules">功能模块</a>
+          <a href="#roles">角色权限</a>
+          <a href="#tech">技术架构</a>
+          <a href="#roadmap">实施路线</a>
+        </nav>
+      </aside>
+
+      <section class="solution-main">
+        <header class="hero" id="position">
+          <p>V1.0 · 评审稿 · 2026年7月</p>
+          <h1>豪勇系统产品方案</h1>
+          <span>面向中小型配送企业的订单、仓储、分拣、配送、考勤、记账一体化管理平台。</span>
+          <div class="hero-actions">
+            <a href="index.html">进入PC后台</a>
+            <a href="driver-login.html">进入司机端</a>
+          </div>
+        </header>
+
+        <section class="metric-grid">
+          <article><span>效率目标</span><strong>分拣效率 +50%</strong></article>
+          <article><span>时效目标</span><strong>订单处理 -30%</strong></article>
+          <article><span>库存目标</span><strong>准确率 99%+</strong></article>
+          <article><span>可用性</span><strong>99.5%</strong></article>
+        </section>
+
+        <section class="panel" id="architecture">
+          <div class="section-title">
+            <p>业务架构</p>
+            <h2>小程序 + App/PDA + PC后台</h2>
+          </div>
+          <div class="flow">
+            <span>客户下单</span>
+            <span>订单审核</span>
+            <span>采购补货</span>
+            <span>扫码分拣</span>
+            <span>配送签收</span>
+            <span>库存更新</span>
+            <span>费用结算</span>
+            <span>经营报表</span>
+          </div>
+        </section>
+
+        <section class="module-grid" id="modules">
+          <article>
+            <h3>进销存管理</h3>
+            <p>采购入库、销售出库、实时库存、库位管理、库存预警、盘点差异。</p>
+          </article>
+          <article>
+            <h3>分拣管理</h3>
+            <p>按单/波次分拣、扫码校验、蓝牙秤称重、标签打印、异常上报。</p>
+          </article>
+          <article>
+            <h3>配送管理</h3>
+            <p>智能派单、路线规划、装车确认、在途跟踪、拍照签收、异常处理。</p>
+          </article>
+          <article>
+            <h3>考勤管理</h3>
+            <p>GPS/WiFi/人脸打卡、排班、补签、加班统计、绩效关联。</p>
+          </article>
+          <article>
+            <h3>记账管理</h3>
+            <p>仓储费、操作费、配送费自动生成，账单汇总、核销对账、经营报表。</p>
+          </article>
+          <article>
+            <h3>系统管理</h3>
+            <p>商品、仓库、人员、车辆、角色权限、多仓数据隔离、操作日志审计。</p>
+          </article>
+        </section>
+
+        <section class="panel" id="roles">
+          <div class="section-title">
+            <p>角色权限</p>
+            <h2>按角色、仓库、终端隔离数据</h2>
+          </div>
+          <div class="role-table">
+            <div><strong>老板/管理者</strong><span>经营看板、审批、人员管理</span></div>
+            <div><strong>客户</strong><span>下单、查订单、支付、签收确认</span></div>
+            <div><strong>库管员</strong><span>入库、盘点、库存预警</span></div>
+            <div><strong>分拣员</strong><span>扫码拣货、称重、打包、异常上报</span></div>
+            <div><strong>配送员</strong><span>接单、路线导航、拍照签收</span></div>
+            <div><strong>财务人员</strong><span>账单、核销、报表导出</span></div>
+          </div>
+        </section>
+
+        <section class="panel" id="tech">
+          <div class="section-title">
+            <p>技术架构</p>
+            <h2>模块化分层，支持后续真实系统开发</h2>
+          </div>
+          <div class="tech-grid">
+            <span>PC：Vue3 + Element Plus</span>
+            <span>小程序：UniApp</span>
+            <span>App/PDA：UniApp / Flutter</span>
+            <span>后端：Spring Boot + MyBatis-Plus</span>
+            <span>数据库：MySQL 8.0 + Redis</span>
+            <span>实时推送：WebSocket</span>
+          </div>
+        </section>
+
+        <section class="panel" id="roadmap">
+          <div class="section-title">
+            <p>实施路线</p>
+            <h2>先跑通主流程，再扩展考勤和财务</h2>
+          </div>
+          <ol class="roadmap">
+            <li><strong>MVP 2-3个月</strong><span>小程序下单、管理后台、基础进销存、商品/客户/仓库管理。</span></li>
+            <li><strong>第二阶段 2-3个月</strong><span>分拣App/PDA、配送App、标签打印、蓝牙秤对接。</span></li>
+            <li><strong>第三阶段 1-2个月</strong><span>考勤模块、记账模块、费用自动计算与账单。</span></li>
+            <li><strong>第四阶段 1个月</strong><span>数据看板、报表中心、第三方系统集成优化。</span></li>
+          </ol>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
